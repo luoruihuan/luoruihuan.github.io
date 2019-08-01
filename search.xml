@@ -27,11 +27,11 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F10%2F20%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[什么是运营商的‘管道化危机’？ -读移动帝国整理]]></title>
+    <url>%2F2015%2F12%2F18%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[运营商相当于高速公路，建好物理网络后对上面运营的服务进行收费。 随着手机上网速度的加快，微信、Q Q、微博等涉及语音、文字信息的服务也快速发展，这些服务占用了高速公路的车道资源，却没给收费站带来应有的收益，同时还冲击到了运营商的语音、短信、彩信等业务。 移动互联网时代的到来，已经成为运营商们心中最大的煎熬。一方面，它们希望借此继续转型，在传统话音业务增长见顶的情况下，从数据业务获得更多的收入。 另一方面，在和新兴移动互联网企业同台竞争时，“基因”的差异又使得运营商们稍显力不从心。 所以各国电信业务运营商迫切的需要去‘管道化’！]]></content>
       <categories>
-        <category>helo</category>
+        <category>杂文</category>
       </categories>
   </entry>
 </search>
