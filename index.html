@@ -334,6 +334,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -362,7 +384,7 @@
 
       
         
-          <h3 id="一、业务回顾"><a href="#一、业务回顾" class="headerlink" title="一、业务回顾"></a>一、业务回顾</h3><p>之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了一层封装，无法触发img的onload事件，canvas自然就没办法去捕获绘图，尝试过二进制数据流，<br>
+          <h3 id="一、业务回顾"><a href="#一、业务回顾" class="headerlink" title="一、业务回顾"></a>一、业务回顾</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了一层封装，无法触发img的onload事件，canvas自然就没办法去捕获绘图，尝试过二进制数据流，
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/08/11/实现图片的拍照加水印功能/#more" rel="contents">
