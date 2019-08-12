@@ -12,6 +12,28 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[扯扯最近读的历史]]></title>
+    <url>%2F2016%2F05%2F21%2F%E6%89%AF%E6%89%AF%E6%9C%80%E8%BF%91%E8%AF%BB%E7%9A%84%E5%8E%86%E5%8F%B2%2F</url>
+    <content type="text"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp; 这段时间酷爱读史，今读胡三省在《资治通鉴》注中“姜维之心,始终为汉,千载之下,炳炳如丹,陈寿、孙盛、干宝之讥皆非也。”想起当年刘禅献降后，姜维密奏，“愿陛下忍数日之辱,臣欲使社稷危而复安,日月幽而复明”，这个时候姜维已经是62岁，大大小小北伐了11次。这种执着，真的是可贵。姜维的一生，是充满矛盾的，在众生相中有些格格不入的。无论身前事，还是身后名。当年写下“若有远志，不在当归”，能在异国一片主和声坚持攻伐自己的母国，执著甚于诸葛亮。 &nbsp;&nbsp;&nbsp;&nbsp; 《银河英雄传说》中，杨威利说过一句话：“我不能选择最好的，我只是选择较好的制度。” 被诸多银英迷奉为圭臬。但可惜，这句话并不适用所有情况：“三国归晋”并不是一个相对较好的选择，而是剩下的唯一选择：短期内不那么差，长期更差。当然，封建集团出于政治目的在后世对他的褒贬，现在看来没有什么直接的参考意义。但他最后这份卫国者的决绝，值得任何人尊重。]]></content>
+      <categories>
+        <category>杂文</category>
+      </categories>
+      <tags>
+        <tag>读书有感</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[如何看待读书杂]]></title>
+    <url>%2F2016%2F04%2F18%2F%E5%B0%8F%E8%AE%AE%20-%20%E8%AF%BB%E4%B9%A6%E6%9D%82%2F</url>
+    <content type="text"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;前段时间和同学聊天，聊到读书的问题，大学时候经常泡在图书馆看各种书，于是大家一起讨论，读书肯定是有好处的，这是毋庸置疑的，但是读了那么多的杂书，意义在哪呢，后来想了很久，印象中梁启超曾说过，“书宜杂读，业宜精钻”，今悟: 读书杂，头绪多，可以探微寻幽，别开蹊径。业务精，专一艺，可以打牢基础，扬其所长；业务精，明利弊，可以看事通透，做事到底。 &nbsp;&nbsp;&nbsp;&nbsp;挤出时间学些常识性东西，特别是文学，或人文科学，稍多用点工夫就能有大收获,以前不屑的一些东西，要试着去接触。既然我不能判断是坏的，那为什么要拒之门外呢？既然是存在的，那我就应该了解这些常识。停止学习，停止读书，我仿佛看到了未来的自己，一无所知的自己。]]></content>
+      <categories>
+        <category>杂文</category>
+      </categories>
+      <tags>
+        <tag>读书有感</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Javascript三元条件运算符]]></title>
     <url>%2F2016%2F03%2F16%2Fjs%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6%2F</url>
     <content type="text"><![CDATA[今天谈一个小知识点，三元运算符。三元运算，顾名思义会有三个要素，表达式的大致组成为condition ? expr1 : expr2；一个语句加两个表达式。问号之前为判断语句。如果为真，则执行第一个表达式，如果为假，则执行第二个表达式。我的理解其实就是简化的if else语句，举个栗子，经常看到的一个点击展开，再点击隐藏按钮: 我想实现点击输入法，实现下面ul的展开与隐藏，如果我们用if else的话可能会这么写： 1234567 oBth.onclick=function()&#123; if (oUl.style.display=='block') &#123; oUl.style.display=='none'; &#125;else&#123; oUl.style.display=='block'; &#125;&#125; 但是如果我们用三元运算符的话可能就只需要下面这一行代码： 123 oBth.onclick=function()&#123; oUl.style.display == "block" ? oUl.style.display="none" : oUl.style.display="block"&#125; 有木有很神奇。当然我只是用了一个比较容易理解的写法，还有很大的优化空间，我们当然也可以这样： 12345oBth.onclick=function()&#123; var style = oUl.style.display; oUl.style.display= style == "block" ? "none":"block" //这样写的话就一定不能忘了把运算结果重新赋值给元素 - - //oUl.style.display= (style == "block" ? "none":"block") 可读性更高&#125; 上面代码的意思是，如果style == “block” 成立的话就把none返回，不成立就返回block，然后把返回结果赋值给作用元素，不过要特别注意 = 和 == 用法和区别。因为赋值运算符（=）的优先级比较低，所以会最后执行赋值运算。如果把后面的三元运算符加上（）可读性会更高一点，但效果是一样的。 比较容易出错的地方：三元运算比较容易出错的应该就是运算的优先级问题： 12var isMember = false;console.log("当前费用" + isMember ? "$2.00" : "$10.00"); //返回$2.00 1"当前费用false" ? "$2.00" : "$10.00"); 在js中字符串是为真的，所以会输出$2.00. 不过为了避免以上错误的话，可以记住 不是false, 0, undefined, NaN, “” or null，js都认为是true;感谢阅读。]]></content>
