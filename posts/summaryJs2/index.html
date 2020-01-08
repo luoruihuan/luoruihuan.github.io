@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="罗瑞环的个人博客">
 <meta property="og:description" content="一、写在前面的叨叨叨&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-08T03:44:19.493Z">
+<meta property="og:updated_time" content="2020-01-08T05:17:34.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端知识点总结(六) JavaScript篇(二)">
 <meta name="twitter:description" content="一、写在前面的叨叨叨&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！">
@@ -549,7 +549,23 @@ DOMContentLoaded：当页面文档加载并解析完毕之后会马上出发 DOM
 <h5 id="14、正则表达式"><a href="#14、正则表达式" class="headerlink" title="14、正则表达式"></a>14、正则表达式</h5><blockquote>
 <ul>
 <li>正则表达式的创建<ul>
-<li>调用RegExp对象的构造函数（<figure class="highlight plain"><figcaption><span>reg </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  *  使用正则表达式字面值(```var reg = /^[a-z]+[0-9]$/gi```)</span><br><span class="line">&gt; * 正则表达式的组成</span><br><span class="line">  *  `元字符: ` .匹配除了换行符(n)以外的所有字符,w匹配字母，数字，或者汉字,W匹配除了字母，数字，汉字以外的其他字符,d匹配数字,D匹配除了数字以外的其他字符, s匹配任意的空白符(f, n, r, t, v), S匹配空白符以外的任意字符, b匹配单词的开始或者结束, B匹配单词的非开始或者结束, `^`匹配行首, `$`匹配行尾。</span><br><span class="line">  *  `转义字符(\):` * + ? | &#123; [ ( ) ] &#125;^ $ . # 和空白需要转义。</span><br><span class="line">  *  `限定符: ` *匹配零次至多次，+匹配一次至多次，？匹配零次或一次&#123;2,&#125;至少匹配两次，&#123;10&#125;匹配10次，&#123;&#123;2, 8&#125;&#125;	至少匹配两次至多匹配八次。</span><br><span class="line">&gt; * 正则表达式的方法</span><br><span class="line">  *  `test：` 检索字符串中的指定子串，返回布尔值。</span><br><span class="line">  *  `exec: ` 返回一个数组，数组中的第一个条目是第一个匹配。</span><br><span class="line">  *  `search: ` 返回子串的开始位置</span><br><span class="line">  *  `match: ` 返回匹配到的子串</span><br><span class="line">  *  `replace: ` 替换匹配到的子串</span><br><span class="line">  *  `split:` 将字符串分割成数组  ``` // &apos;a12b2334c34&apos;.split(/\d&#123;4&#125;/) [&quot;a12b&quot;, &quot;c34&quot;]</span><br></pre></td></tr></table></figure></li>
+<li>调用RegExp对象的构造函数<code>var reg = new RegExp(&#39;^[a-z]+[0-9]$&#39;, &#39;gi&#39;)</code>其中第一个参数是匹配模式，第二个参数是可选参数(g, i, m),分别用于指定全局匹配、区分大小写的匹配和多行匹配。</li>
+<li>使用正则表达式字面值<code>(var reg = /^[a-z]+[0-9]$/gi)</code></li>
+</ul>
+</li>
+<li>正则表达式的组成<ul>
+<li><code>元字符:</code> .匹配除了换行符(n)以外的所有字符,w匹配字母，数字，或者汉字,W匹配除了字母，数字，汉字以外的其他字符,d匹配数字,D匹配除了数字以外的其他字符, s匹配任意的空白符(f, n, r, t, v), S匹配空白符以外的任意字符, b匹配单词的开始或者结束, B匹配单词的非开始或者结束, <code>^</code>匹配行首, <code>$</code>匹配行尾。</li>
+<li><code>转义字符(\):</code> * + ? | { [ ( ) ] }^ $ . # 和空白需要转义。</li>
+<li><code>限定符:</code> <code>*</code>匹配零次至多次，<code>+</code>匹配一次至多次，<code>？</code>匹配零次或一次{2,}至少匹配两次，{10}匹配10次，{2, 8}至少匹配两次至多匹配八次。</li>
+</ul>
+</li>
+<li>正则表达式的方法<ul>
+<li><code>test：</code> 检索字符串中的指定子串，返回布尔值。</li>
+<li><code>exec:</code> 返回一个数组，数组中的第一个条目是第一个匹配。</li>
+<li><code>search:</code> 返回子串的开始位置</li>
+<li><code>match:</code> 返回匹配到的子串</li>
+<li><code>replace:</code> 替换匹配到的子串</li>
+<li><code>split:</code> 将字符串分割成数组  <code>// &#39;a12b2334c34&#39;.split(/\d{4}/) [&quot;a12b&quot;, &quot;c34&quot;]</code></li>
 </ul>
 </li>
 </ul>
