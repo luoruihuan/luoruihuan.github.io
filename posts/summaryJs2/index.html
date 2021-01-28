@@ -951,14 +951,20 @@ DOMContentLoaded：当页面文档加载并解析完毕之后会马上出发 DOM
 
 
 
-
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="../../../css/gitment.css">
+        <script src="../../../js/src/gitment.js"></script>
+    
+<!-- END LOCAL -->
 
     
 
     
       <script type="text/javascript">
       function renderGitment(){
-        var gitment = new ({
+        var gitment = new Gitment({
             id: window.location.pathname,
             owner: 'luoruihuan',
             repo: 'BlogsComments',
