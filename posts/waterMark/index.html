@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="canvas,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、业务回顾&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了">
+<meta name="keywords" content="canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能">
+<meta property="og:url" content="http://yoursite.com/posts/waterMark/index.html">
+<meta property="og:site_name" content="罗瑞环的个人博客">
+<meta property="og:description" content="一、业务回顾&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/uploads/waterMack.png">
+<meta property="og:updated_time" content="2023-08-31T06:17:47.979Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能">
+<meta name="twitter:description" content="一、业务回顾&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了">
+<meta name="twitter:image" content="http://yoursite.com/uploads/waterMack.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/posts/waterMark/">
+
+
+
+
+
+  <title>input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能 | 罗瑞环的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46803372ba26f30b23149d9b63753426";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">罗瑞环的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/waterMark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ron.luo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罗瑞环的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-01-11T16:09:41+08:00">
+                2022-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、业务回顾"><a href="#一、业务回顾" class="headerlink" title="一、业务回顾"></a>一、业务回顾</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;之前接到过一个需求，需要用户在企业微信内使用我们的程序时，进行拍照功能，并添加水印后将水印图片存储至自己的阿里云图片服务器，本身需求并不难，因为以当时的了解，加水印可以直接canvas操作，然后只需要调用企业微信暴露的chooseImage 方法得到图片file信息就可以，但是too native，企业微信对img的localIds进行了一层封装，无法触发img的onload事件，canvas自然就没办法去捕获绘图，尝试过二进制数据流，<a id="more"></a>FileReader去进行文件转换，最后都没办法绕过，坑了很久，最后想着大不了不用微信的chooseImage，我自己去掉原生的API，getUserMedia获取用户拍照信息，很遗憾，这个方法在企业微信禁用了，所以最后的实现方案成了在后台服务器端加水印，然后通过腾讯服务器中转来获取图片，虽然最后的方案不尽人意，但是过程中还是学到了很多，就点，可以来简单的总结下getUserMedia的用法。</p>
+<h3 id="二、getUserMedia-API简介"><a href="#二、getUserMedia-API简介" class="headerlink" title="二、getUserMedia API简介"></a>二、getUserMedia API简介</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;HTML5的getUserMedia API为用户提供访问硬件设备媒体（摄像头、视频、音频、地理位置等）的接口，基于该接口，我们可以在不依赖任何插件的条件下访问硬件媒体设备。<br>getUserMedia API最初是navigator.getUserMedia，目前已被最新Web标准（2017版的）废除，变更为navigator.mediaDevices.getUserMedia(),但浏览器支持情况不如旧版API普及。所以实际业务场景中使用时，一般都会做一些兼容处理。MediaDevices.getUserMedia（）方法提示用户允许使用一个视频和/或一个音频输入设备，例如相机或屏幕共享和/或麦克风。如果用户给予许可，就返回一个Promise对象，MediaStream对象作为此Promise对象的Resolved状态的回调函数参数，如果用户拒绝了许可，或者没有媒体可用的情况下PermissionDeniedError或者NotFoundError作为此Promise的Rejected状态的回调函数参数。注意，由于用户不会被要求必须作出允许或者拒绝的选择，所以返回的Promise对象可能既不会触发resolve也不会触发 reject。</p>
+<h3 id="三、实际使用"><a href="#三、实际使用" class="headerlink" title="三、实际使用"></a>三、实际使用</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;具体的使用方法其实也很简单,html如下，一个简单的video标签获取当前的媒体流，一个拍照按钮，一个canvas容器对图片进行水印处理。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">"video"</span> <span class="attr">width</span>=<span class="string">"320"</span> <span class="attr">height</span>=<span class="string">"240"</span> <span class="attr">autoplay</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"btn"</span>&gt;</span>拍照<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"canvas"</span> <span class="attr">width</span>=<span class="string">"320"</span> <span class="attr">height</span>=<span class="string">"240"</span> &gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>简单的JS代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> camera = &#123;</span><br><span class="line">    video: <span class="built_in">document</span>.getElementById(<span class="string">'video'</span>),</span><br><span class="line">    canvas:  <span class="built_in">document</span>.getElementById(<span class="string">'canvas'</span>),</span><br><span class="line">    btn: <span class="built_in">document</span>.getElementById(<span class="string">"btn"</span>),</span><br><span class="line">    font: <span class="string">"14px microsoft yahei"</span>,</span><br><span class="line">    style: <span class="string">"rgba(255,255,255,0.9)"</span>,</span><br><span class="line">    text: <span class="string">"这是我要加的水印"</span>,</span><br><span class="line">    height: <span class="number">240</span>, <span class="attr">width</span>: <span class="number">320</span>,</span><br><span class="line">    draw_pic: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">var</span> context = self.canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">        context.drawImage(self.video, <span class="number">0</span>, <span class="number">0</span>, self.width,self.height);</span><br><span class="line">        context.font = self.font;</span><br><span class="line">        context.fillStyle = self.style;</span><br><span class="line">        context.fillText(self.text, self.width - <span class="number">140</span> , self.height - <span class="number">10</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    bind: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        self.btn.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            self.draw_pic();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> video = <span class="keyword">this</span>.video;</span><br><span class="line">        <span class="comment">// 原来的navigator.mediaDevices 方法已废弃， window.URL.createObjectURL 已废弃</span></span><br><span class="line">        <span class="comment">// 想要获取一个最接近 1280x720 的相机分辨率</span></span><br><span class="line">        <span class="keyword">var</span> constraints = &#123; <span class="attr">audio</span>: <span class="literal">true</span>, <span class="attr">video</span>: &#123; <span class="attr">width</span>: <span class="number">1280</span>, <span class="attr">height</span>: <span class="number">720</span> &#125; &#125;;</span><br><span class="line"></span><br><span class="line">        navigator.mediaDevices.getUserMedia(constraints)</span><br><span class="line">        .then(<span class="function"><span class="keyword">function</span>(<span class="params">mediaStream</span>) </span>&#123;</span><br><span class="line">          video.srcObject = mediaStream;</span><br><span class="line">          <span class="comment">// 指定视频/音频（audio/video）的元数据加载后触发</span></span><br><span class="line">          video.onloadedmetadata = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            video.play();</span><br><span class="line">          &#125;;</span><br><span class="line">        &#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err.name + <span class="string">": "</span> + err.message);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.bind();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">camera.init();</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;实现效果如图，当用户调用相机时，获取视频流，然后将视频流设置为video元素的源，然后播放视频，点击拍照时绘制当前照片页面。<br>    <img src="/uploads/waterMack.png" alt="js-three-bg"><br>当然，功能很简单，注意事项还是不少的，例如我刚才开始写的时候是用的window.URL.createObjectURL方法去设置视频流，但是一直有问题，Google发现属性已经废弃，可以直接video.src = stream,来使用视频流。但因为老版浏览器对旧属性支持更好所以用try catch做了兼容处理。针对上面用到的onloadedmetadata方法，这边有一些关于video视频元数据加载的执行顺序钩子：onloadstart、ondurationchange、onloadedmetadata、onloadeddata、onprogress、oncanplay、oncanplaythrough.</p>
+<h3 id="四、再次接触图片加水印"><a href="#四、再次接触图片加水印" class="headerlink" title="四、再次接触图片加水印"></a>四、再次接触图片加水印</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;上面提到需求拍照加水印最后虽然实现了，但是是服务器端实现，占用服务器带宽，再加上现在手机拍照动辄十几M的图片大小，我们这个功能使用的客户数在两万左右，而且大概率是集中使用，这样就会导致服务器压力很大，当然，企业微信那块我们是真没办法处理，所以产品就把功能加在了标准版没有了企业微信的一系列限制，我们就可以大展手脚了，综合调研下，我们决定用input标签的 <strong>accept=”image/*” capture=”camera”</strong> 属性来实现仅调用相机，不从相册上传的限制，但是这个属性是有兼容问题，目前使用下来，除ios10.<em>.</em> 版本系统还是会提示从相机选择外，其他机型都是完美兼容的，既然客户同意，那咱开发自然肯定是没啥意见，功能点的实现大致是有以下几个坑。</p>
+<blockquote>
+<ul>
+<li>1、input兼容：就是刚刚提到的input 仅调用相机的兼容问题</li>
+<li>2、img图片渲染：对img元素加水印时，onLoad 事件的执行顺序问题。</li>
+<li>3、前端图片压缩：现在的手机拍摄照片过大，上传服务器有较大压力，如果功能对图片质量要求不是很高的话，对图片进行压缩也是必须的。</li>
+<li>4、IOS 拍照图片旋转角问题。</li>
+<li>5、canvas绘图后图片失真问题。</li>
+<li>6、图片转为二进制流数据传输时，toBlob 方法的兼容问题。</li>
+</ul>
+</blockquote>
+<p>既然理论和坑都已经大致说在前面了，剩下的就是开始撸代码了，功能其实还是比较简单的，主要是踩坑过程比较艰辛，话不多说，上代码：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">onChange</span>=<span class="string">'onFileSelected(event)'</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">capture</span>=<span class="string">"camera"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>为了demo简单，就将获取图片和加水印写在了一个方法里：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数为:file文件,水印内容，图片大小</span></span><br><span class="line">Watermark = <span class="function">(<span class="params">file, text, maxWidth = <span class="number">400</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resove, reject</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">// 上传之前通过FileReader方法去预览图片</span></span><br><span class="line">        <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">        reader.onload = <span class="function">(<span class="params">e</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="keyword">let</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">            image.src = e.target.result;</span><br><span class="line">            image.onload = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line">                <span class="keyword">let</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">                <span class="keyword">let</span> &#123; width, height &#125; = <span class="keyword">this</span>;</span><br><span class="line">                <span class="keyword">if</span>(maxWidth !== <span class="number">0</span>)&#123;</span><br><span class="line">                    width = <span class="built_in">Math</span>.min(maxWidth, <span class="keyword">this</span>.width);</span><br><span class="line">                    height = height * (width / <span class="keyword">this</span>.width);</span><br><span class="line">                &#125;</span><br><span class="line">                canvas.width = width;</span><br><span class="line">                canvas.height = height;</span><br><span class="line">                <span class="comment">// 水印内容</span></span><br><span class="line">                ctx.font=<span class="string">'26px Roboto-Medium'</span>; <span class="comment">//字体</span></span><br><span class="line">                ctx.fillStyle = <span class="string">'#FFFFFF'</span>;	<span class="comment">//字体颜色</span></span><br><span class="line">                ctx.fillText(text, <span class="number">20</span>, <span class="number">35</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果需要base64的格式传输</span></span><br><span class="line">                <span class="keyword">let</span> base64 = canvas.toDataURL(<span class="string">'image/png'</span>);</span><br><span class="line">                resolve(base64);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果需要二进制流传输</span></span><br><span class="line">                canvas.toBlob( <span class="function"><span class="params">blob</span> =&gt;</span> &#123;</span><br><span class="line">                    resolve(blob);</span><br><span class="line">                &#125;;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            image.src = e.target.result;</span><br><span class="line">        &#125;</span><br><span class="line">        reader.onerror = reject;</span><br><span class="line">        reader.readAsDataURL(file);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="IOS-拍照旋转问题"><a href="#IOS-拍照旋转问题" class="headerlink" title="IOS 拍照旋转问题"></a>IOS 拍照旋转问题</h4><p>主要的代码结构其实已经完成，针对上面提到问题，可以增加适当的兼容代码，例如：IOS 拍照旋转问题，需要引入exif-js插件，做一下处理：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 获取照片方向角属性 */</span></span><br><span class="line">EXIF.getData(image, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">let</span> orientation = EXIF.getTag(<span class="keyword">this</span>, <span class="string">'Orientation'</span>);</span><br><span class="line">    <span class="keyword">switch</span> (orientation) &#123;</span><br><span class="line">        <span class="comment">/** 需要顺时针90度旋转 */</span></span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">            canvas.width = height;</span><br><span class="line">            canvas.height = width;</span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.translate(canvas.width / <span class="number">2</span>, canvas.height / <span class="number">2</span>);</span><br><span class="line">            ctx.rotate(<span class="number">90</span> * <span class="built_in">Math</span>.PI / <span class="number">180</span>);</span><br><span class="line">            ctx.drawImage(image, <span class="number">0</span> - canvas.height / <span class="number">2</span>, <span class="number">0</span> - canvas.width / <span class="number">2</span>, canvas.height, canvas.width);</span><br><span class="line">            ctx.restore();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">/** 需要逆时针90度旋转 */</span></span><br><span class="line">        <span class="keyword">case</span> <span class="number">8</span>:</span><br><span class="line">            canvas.width = height;</span><br><span class="line">            canvas.height = width;</span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.translate(canvas.width / <span class="number">2</span>, canvas.height / <span class="number">2</span>);</span><br><span class="line">            ctx.rotate(<span class="number">-90</span> * <span class="built_in">Math</span>.PI / <span class="number">180</span>);</span><br><span class="line">            ctx.drawImage(image, <span class="number">0</span> - canvas.height / <span class="number">2</span>, <span class="number">0</span> - canvas.width / <span class="number">2</span>, canvas.height, canvas.width);</span><br><span class="line">            ctx.restore();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">/** 需要180度旋转 */</span></span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            ctx.save();</span><br><span class="line">            ctx.rotate(<span class="number">180</span> * <span class="built_in">Math</span>.PI / <span class="number">180</span>);</span><br><span class="line">            ctx.drawImage(<span class="keyword">this</span>, -width, -height, canvas.width, canvas.height);</span><br><span class="line">            ctx.restore();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            ctx.drawImage(<span class="keyword">this</span>, <span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h4 id="IOS10-0版本以下，toBlob方法不存在的兼容方法"><a href="#IOS10-0版本以下，toBlob方法不存在的兼容方法" class="headerlink" title="IOS10.0版本以下，toBlob方法不存在的兼容方法"></a>IOS10.0版本以下，toBlob方法不存在的兼容方法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当canvas对象的原型中没有toBlob方法的时候，手动添加该方法</span></span><br><span class="line"><span class="keyword">if</span> (!HTMLCanvasElement.prototype.toBlob) &#123;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(HTMLCanvasElement.prototype, <span class="string">'toBlob'</span>, &#123;</span><br><span class="line">        value: <span class="function"><span class="keyword">function</span> (<span class="params">callback, type, quality</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> binStr = atob(<span class="keyword">this</span>.toDataURL(type, quality).split(<span class="string">','</span>)[<span class="number">1</span>]),</span><br><span class="line">                len = binStr.length,</span><br><span class="line">                arr = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(len);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">                arr[i] = binStr.charCodeAt(i);</span><br><span class="line">            &#125;</span><br><span class="line">            callback(<span class="keyword">new</span> Blob([arr], &#123; <span class="attr">type</span>: type || <span class="string">'image/png'</span> &#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Canvas图片压缩"><a href="#Canvas图片压缩" class="headerlink" title="Canvas图片压缩"></a>Canvas图片压缩</h4><p>还有就是Canvas图片压缩，图片压缩原理其实很简单，核心API就是使用<code>Canvas</code>的<code>drawImage()</code>方法，API大致如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.drawImage(img, dx, dy);</span><br><span class="line">context.drawImage(img, dx, dy, dWidth, dHeight);</span><br><span class="line">context.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);</span><br></pre></td></tr></table></figure></p>
+<p>虽然参数很多，简单总结下其实可以归纳为如下三个参数：<br>        &nbsp;&nbsp;&nbsp;&nbsp;<strong> img : </strong> &nbsp;&nbsp;图片对象,也可以是虚拟DOM中的图片对象<br>        &nbsp;&nbsp;&nbsp;&nbsp;<strong> dx, dy, dWidth, dHeight : </strong>&nbsp;&nbsp;表示在<code>canvas</code>画布上规划处一片区域用来放置图片，<code>dx</code>, <code>dy</code>为<code>canvas</code>元素的左上角坐标，<code>dWidth</code>, <code>dHeight</code>指<code>canvas</code>元素上用在显示图片的区域大小。如果没有指定<code>sx</code>,<code>sy</code>,<code>sWidth</code>,<code>sHeight</code>这4个参数，则图片会被拉伸或缩放在这片区域内。<br>        &nbsp;&nbsp;&nbsp;&nbsp;<strong> sx, sy, swidth, sheight : </strong> &nbsp;&nbsp;这4个坐标是针对图片元素的，表示图片在canvas画布上显示的大小和位置。<code>sx</code>,<code>sy</code>表示图片上<code>sx</code>,<code>sy</code>这个坐标作为左上角，然后往右下角的<code>swidth</code>,<code>sheight</code>尺寸范围图片作为最终在<code>canvas</code>上显示的图片内容。<br>当然，为了方便我个人一般都是用五个参数的语法，我们举个例子，假如一张图片的尺寸是1024 * 800，我们需要限制为102 * 80，核心代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">ctx.drawImage(img,<span class="number">0</span>,<span class="number">0</span>,<span class="number">102</span>,<span class="number">80</span>);</span><br></pre></td></tr></table></figure></p>
+<p>其实就这么一句代码就实现了图片压缩，有木有很简单。</p>
+<h4 id="Canvas绘图容易失真的问题"><a href="#Canvas绘图容易失真的问题" class="headerlink" title="Canvas绘图容易失真的问题"></a><code>Canvas</code>绘图容易失真的问题</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;最后还有一个关于<code>Canvas</code>绘图容易失真的问题，这块内容主要涉及到<code>devicePixelRatio</code> 设备像素比，这块的话，大家可以去看张鑫旭的这篇文章：<a href="https://www.zhangxinxu.com/wordpress/2012/08/window-devicepixelratio/" target="_blank" rel="noopener">文章地址</a> 这块对<code>devicePixelRatio</code>属性进行了很详细的介绍，实际我们解决<code>canvas</code>画图模糊就是画一个两倍于实际大小的<code>canvas</code>，简单解释就是<code>devicePixelRatio</code>属性决定了用几个像素点渲染一个像素，假如某个屏幕的<code>devicePixelRatio</code>值为2，一张100 * 100像素的图片会用两个像素点渲染，实际图片其实会占据200 * 200像素空间，所以我们需要直接创建一个两倍实际大小<code>canvas</code>，然后用css样式把canvas限定在实际的大小，具体核心代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">var</span> devicePixelRatio = <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> backingStoreRatio = context.webkitBackingStorePixelRatio ||</span><br><span class="line">                    context.mozBackingStorePixelRatio ||</span><br><span class="line">                    context.msBackingStorePixelRatio ||</span><br><span class="line">                    context.oBackingStorePixelRatio ||</span><br><span class="line">                    context.backingStorePixelRatio || <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">var</span> ratio = devicePixelRatio / backingStoreRatio;</span><br><span class="line">    canvas.width = canvas.width * ratio;</span><br><span class="line">    canvas.height = canvas.height* ratio;</span><br><span class="line">    context.scale(ratio, ratio);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;嗯，到这里这篇文章差不多就要结束了，说的有点乱，大致就是前端实现图片上传，加水印，和后台数据传输（base64，二进制流）实现过程中的一些坑和注意事项，如有错误，不吝指教。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/canvas/" rel="tag"># canvas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/summaryJs2/" rel="next" title="前端知识点总结(六) JavaScript篇(二)">
+                <i class="fa fa-chevron-left"></i> 前端知识点总结(六) JavaScript篇(二)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/nodeDeploy/" rel="prev" title="node前端线上部署与基础运维">
+                node前端线上部署与基础运维 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Ron.luo">
+            
+              <p class="site-author-name" itemprop="name">Ron.luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/luoruihuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:luoruihuan2015@gmail.com" target="_blank" title="EMail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>EMail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、业务回顾"><span class="nav-number">1.</span> <span class="nav-text">一、业务回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、getUserMedia-API简介"><span class="nav-number">2.</span> <span class="nav-text">二、getUserMedia API简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、实际使用"><span class="nav-number">3.</span> <span class="nav-text">三、实际使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、再次接触图片加水印"><span class="nav-number">4.</span> <span class="nav-text">四、再次接触图片加水印</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IOS-拍照旋转问题"><span class="nav-number">4.1.</span> <span class="nav-text">IOS 拍照旋转问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOS10-0版本以下，toBlob方法不存在的兼容方法"><span class="nav-number">4.2.</span> <span class="nav-text">IOS10.0版本以下，toBlob方法不存在的兼容方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Canvas图片压缩"><span class="nav-number">4.3.</span> <span class="nav-text">Canvas图片压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Canvas绘图容易失真的问题"><span class="nav-number">4.4.</span> <span class="nav-text">Canvas绘图容易失真的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ron.luo</span>
+  <span class="author"><a id="jsl_speed_stat2" href="http://www.yunaq.com/#zid=5d521c2745475e07ac6f31ed" target="_blank">知道创宇云安全</a></span>
+   <script src="//static.yunaq.com/static/js/stat/picture2_stat.js" charset="utf-8" type="text/javascript"></script>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="../../../css/gitment.css">
+        <script src="../../../js/src/gitment.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: window.location.pathname,
+            owner: 'luoruihuan',
+            repo: 'BlogsComments',
+            
+            oauth: {
+            
+            
+                client_secret: '9e8804f0ec285bac617e3c3f79e3d5a7ccf35919',
+            
+                client_id: '8ad006f46dcfbfa6cadb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

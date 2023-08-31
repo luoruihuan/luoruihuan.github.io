@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、Puppeteer 是什么Puppeteer，翻译成中文可以理解成傀儡的意思，他是一个Node库，主要是提供接口来控制 headless chrome ，也就是无头浏览器，无头浏览器是一种不使用chrome来运行chrome浏览器的方式，简单来讲，其实就是编写javascript 代码自动化控制 Chrome。 我们能用Puppeteer做些什么   1、利用网页生成PDF，图片 2、主要的从">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Puppeteer 入门">
+<meta property="og:url" content="http://yoursite.com/posts/puppeteer/index.html">
+<meta property="og:site_name" content="罗瑞环的个人博客">
+<meta property="og:description" content="一、Puppeteer 是什么Puppeteer，翻译成中文可以理解成傀儡的意思，他是一个Node库，主要是提供接口来控制 headless chrome ，也就是无头浏览器，无头浏览器是一种不使用chrome来运行chrome浏览器的方式，简单来讲，其实就是编写javascript 代码自动化控制 Chrome。 我们能用Puppeteer做些什么   1、利用网页生成PDF，图片 2、主要的从">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-08-31T06:21:00.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Puppeteer 入门">
+<meta name="twitter:description" content="一、Puppeteer 是什么Puppeteer，翻译成中文可以理解成傀儡的意思，他是一个Node库，主要是提供接口来控制 headless chrome ，也就是无头浏览器，无头浏览器是一种不使用chrome来运行chrome浏览器的方式，简单来讲，其实就是编写javascript 代码自动化控制 Chrome。 我们能用Puppeteer做些什么   1、利用网页生成PDF，图片 2、主要的从">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/posts/puppeteer/">
+
+
+
+
+
+  <title>Puppeteer 入门 | 罗瑞环的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46803372ba26f30b23149d9b63753426";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">罗瑞环的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/puppeteer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ron.luo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罗瑞环的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Puppeteer 入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-06-22T23:03:05+08:00">
+                2023-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、Puppeteer-是什么"><a href="#一、Puppeteer-是什么" class="headerlink" title="一、Puppeteer 是什么"></a>一、Puppeteer 是什么</h2><p>Puppeteer，翻译成中文可以理解成傀儡的意思，他是一个Node库，主要是提供接口来控制 headless chrome ，也就是无头浏览器，无头浏览器是一种不使用chrome来运行chrome浏览器的方式，简单来讲，其实就是编写javascript 代码自动化控制 Chrome。</p>
+<p>我们能用Puppeteer做些什么</p>
+<blockquote>
+<ul>
+<li>1、利用网页生成PDF，图片</li>
+<li>2、主要的从网站抓取内容。</li>
+<li>3、自动化表单提交、UI测试、键盘输入等。</li>
+<li>4、捕获站点的时间线，一遍追踪网站，帮助分析网站性能问题。</li>
+</ul>
+</blockquote>
+<hr>
+
+<a id="more"></a>
+<h2 id="二、运行环境"><a href="#二、运行环境" class="headerlink" title="二、运行环境"></a>二、运行环境</h2><p>Node 版本大于 V7.6.0，因为Puppeteer中所有的操作几乎都是一步的，如果使用大量的then会使代码的可读性特别低，所以选择ES7中的 async，await 语法，这也是 Puppeteer 官方推荐的写法。</p>
+<hr>
+
+<h2 id="三、基本用法"><a href="#三、基本用法" class="headerlink" title="三、基本用法"></a>三、基本用法</h2><h3 id="1、入门-Demo-屏幕截图"><a href="#1、入门-Demo-屏幕截图" class="headerlink" title="1、入门 Demo 屏幕截图"></a>1、入门 Demo 屏幕截图</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>);</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getPic</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 启动 puppeteer</span></span><br><span class="line">    <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.launch(&#123; <span class="attr">headless</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">    <span class="comment">// 在浏览器中创建一个新的页面</span></span><br><span class="line">    <span class="keyword">const</span> page = <span class="keyword">await</span> browser.newPage();</span><br><span class="line">    <span class="comment">// 使用 goto 打开指定网页</span></span><br><span class="line">    <span class="keyword">await</span> page.goto(<span class="string">"https://www.baidu.com"</span>);</span><br><span class="line">    <span class="comment">// 调整页面配置大小，截图更好看</span></span><br><span class="line">    <span class="keyword">await</span> page.setViewport(&#123; <span class="attr">width</span>: <span class="number">1400</span>, <span class="attr">height</span>: <span class="number">900</span> &#125;);</span><br><span class="line">    <span class="comment">// 使用 screenshot 函数对网页进行截屏</span></span><br><span class="line">    <span class="keyword">await</span> page.screenshot(&#123; <span class="attr">path</span>: <span class="string">'baidu.png'</span> &#125;)</span><br><span class="line">    <span class="comment">// 关闭浏览器</span></span><br><span class="line">    <span class="keyword">await</span> browser.close();</span><br><span class="line">&#125;</span><br><span class="line">getPic();</span><br></pre></td></tr></table></figure>
+<h3 id="2、基础使用属性"><a href="#2、基础使用属性" class="headerlink" title="2、基础使用属性"></a>2、基础使用属性</h3><h4 id="①-puppeteer-launch-options-options-参数详解"><a href="#①-puppeteer-launch-options-options-参数详解" class="headerlink" title="① puppeteer.launch(options) options 参数详解"></a>① puppeteer.launch(options) options 参数详解</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">参数名称</th>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ignoreHTTPSErrors</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">在请求的过程中是否忽略 Https 报错信息，默认为 false</td>
+</tr>
+<tr>
+<td style="text-align:left">headless</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">是否以”无头”的模式运行 chrome, 也就是不显示 UI， 默认为 true</td>
+</tr>
+<tr>
+<td style="text-align:left">executablePath</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">可执行文件的路劲，Puppeteer 默认是使用它自带的 chrome webdriver, 如果你想指定一个自己的 webdriver 路径，可以通过这个参数设置</td>
+</tr>
+<tr>
+<td style="text-align:left">slowMo</td>
+<td style="text-align:left">number</td>
+<td style="text-align:left">使 Puppeteer 操作减速，单位是毫秒。如果你想看看 Puppeteer 的整个工作过程，这个参数将非常有用。</td>
+</tr>
+<tr>
+<td style="text-align:left">args</td>
+<td style="text-align:left">Array(String)</td>
+<td style="text-align:left">传递给 chrome 实例的其他参数，比如你可以使用”–ash-host-window-bounds=1024x768” 来设置浏览器窗口大小。</td>
+</tr>
+<tr>
+<td style="text-align:left">handleSIGINT</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">是否允许通过进程信号控制 chrome 进程，也就是说是否可以使用 CTRL+C 关闭并退出浏览器.</td>
+</tr>
+<tr>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">number</td>
+<td style="text-align:left">等待 Chrome 实例启动的最长时间。默认为30000（30秒）。如果传入 0 的话则不限制时间</td>
+</tr>
+<tr>
+<td style="text-align:left">userDataDir</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">设置用户数据目录，默认linux 是在 ~/.config 目录，window 默认在 C:\Users{USER}\AppData\Local\Google\Chrome\User Data, 其中 {USER} 代表当前登录的用户名.</td>
+</tr>
+<tr>
+<td style="text-align:left">env</td>
+<td style="text-align:left">Object</td>
+<td style="text-align:left">指定对Chromium可见的环境变量。默认为process.env.</td>
+</tr>
+<tr>
+<td style="text-align:left">devtools</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">是否为每个选项卡自动打开DevTools面板， 这个选项只有当 headless 设置为 false 的时候有效</td>
+</tr>
+</tbody>
+</table>
+<h4 id="②-Browser-对象"><a href="#②-Browser-对象" class="headerlink" title="② Browser 对象"></a>② Browser 对象</h4><p>当 Puppeteer 连接到一个 Chrome 实例的时候就会创建一个 Browser 对象，有以下两种方式：<br>Puppeteer.launch 和 Puppeteer.connect. Browser 对象 API :</p>
+<table>
+<thead>
+<tr>
+<th>方法名称</th>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>browser.close()</td>
+<td>Promise</td>
+<td>关闭浏览器</td>
+</tr>
+<tr>
+<td>browser.disconnect()</td>
+<td>void</td>
+<td>断开浏览器连接</td>
+</tr>
+<tr>
+<td>browser.newPage()</td>
+<td>Promise(Page)</td>
+<td>创建一个 Page 实例</td>
+</tr>
+<tr>
+<td>browser.pages()</td>
+<td>Promise(Array(Page))</td>
+<td>获取所有打开的 Page 实例</td>
+</tr>
+<tr>
+<td>browser.targets()</td>
+<td>Array(Target)</td>
+<td>获取所有活动的 targets</td>
+</tr>
+<tr>
+<td>browser.version()</td>
+<td>Promise(Page)</td>
+<td>获取浏览器的版本</td>
+</tr>
+<tr>
+<td>browser.wsEndpoint()</td>
+<td>String</td>
+<td>返回浏览器实例的 socket 连接 URL, 可以通过这个 URL 重连接 chrome 实例</td>
+</tr>
+</tbody>
+</table>
+<p>Puppeteer 详细Api地址  <a href="https://github.com/puppeteer/puppeteer/blob/main/docs/api.md" target="_blank" rel="noopener">https://github.com/puppeteer/puppeteer/blob/main/docs/api.md</a></p>
+<hr>
+
+<h2 id="四、实战获取京东商城手机商品"><a href="#四、实战获取京东商城手机商品" class="headerlink" title="四、实战获取京东商城手机商品"></a>四、实战获取京东商城手机商品</h2><p>首先梳理操作流程：</p>
+<blockquote>
+<ul>
+<li>①、打开京东首页</li>
+<li>②、输入手机关键字并搜索</li>
+<li>③、获取前10个商品的A标签，并获取商品详情链接。</li>
+<li>④、分别打开10个详情图，截取网页图片。</li>
+</ul>
+</blockquote>
+<p>要实现上面的功能，需要用到查找元素，获取属性，键盘回车等，接下来一个一个讲解一下。</p>
+<h3 id="1、获取元素"><a href="#1、获取元素" class="headerlink" title="1、获取元素"></a>1、获取元素</h3><p>Page 对象提供了2个API来获取页面元素：<br>(1). <code>Page.$(selector)</code> 获取单个元素，底层是调用的是 <code>document.querySelector()</code> , 所以选择器的 selector 格式遵循 css 选择器规范;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> inputElement = <span class="keyword">await</span> page.$(<span class="string">'#search'</span>);</span><br></pre></td></tr></table></figure>
+<p>(2). <code>Page.$$(selector)</code> 获取一组元素，底层调用的是 <code>document.querySelectorAll()</code>. 返回 Promise(Array(ElemetHandle)) 元素数组.<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> links = <span class="keyword">await</span> page.$$(<span class="string">"a"</span>);</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、获取元素属性"><a href="#2、获取元素属性" class="headerlink" title="2、获取元素属性"></a>2、获取元素属性</h3><p>(1). <code>Page.$eval(selector, pageFunction[, …args])</code>, 获取单个元素的属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> value = <span class="keyword">await</span> page.$<span class="built_in">eval</span>(<span class="string">'input[name=search]'</span>, input =&gt; input.value);</span><br><span class="line"><span class="keyword">const</span> href = <span class="keyword">await</span> page.$<span class="built_in">eval</span>(<span class="string">'#a", ele =&gt; ele.href);</span></span><br><span class="line"><span class="string">const content = await page.$eval('</span>.content<span class="string">', ele =&gt; ele.outerHTML);</span></span><br></pre></td></tr></table></figure></p>
+<p>(2). <code>Page.$$eval(selector, pageFunction[, …args])</code>, 获取元素数组的属性</p>
+<h3 id="3、键盘和鼠标事件"><a href="#3、键盘和鼠标事件" class="headerlink" title="3、键盘和鼠标事件"></a>3、键盘和鼠标事件</h3><p>键盘和鼠标的API比较简单，键盘的几个API如下：</p>
+<blockquote>
+<ul>
+<li>keyboard.down(key[, options]) 触发 keydown 事件</li>
+<li>keyboard.press(key[, options]) 按下某个键，key 表示键的名称</li>
+<li>keyboard.sendCharacter(char) 输入一个字符</li>
+<li>keyboard.type(text, options) 输入一个字符串</li>
+<li>keyboard.up(key) 触发 keyup 事件</li>
+<li>page.keyboard.press(“Shift”); //按下 Shift 键</li>
+<li>page.keyboard.sendCharacter(‘嗨’);</li>
+<li>page.keyboard.type(‘Hello’); // 一次输入完成</li>
+<li>page.keyboard.type(‘World’, {delay: 100}); // 像用户一样慢慢输入<br> 鼠标Api如下:</li>
+<li>mouse.click(x, y, [options]) 移动鼠标指针到指定的位置，然后按下鼠标，这个其实 mouse.move 和 mouse.down 或 mouse.up 的快捷操作</li>
+<li>mouse.down([options]) 触发 mousedown 事件，options 可配置:</li>
+<li>options.button 按下了哪个键，可选值为[left, right, middle], 默认是 left, 表示鼠标左键</li>
+<li>options.clickCount 按下的次数，单击，双击或者其他次数</li>
+<li>delay 按键延时时间</li>
+<li>mouse.move(x, y, [options]) 移动鼠标到指定位置， options.steps 表示移动的步长</li>
+<li>mouse.up([options]) 触发 mouseup 事件</li>
+</ul>
+</blockquote>
+<h3 id="4、其他实用API"><a href="#4、其他实用API" class="headerlink" title="4、其他实用API"></a>4、其他实用API</h3><pre><code>page.waitForSelector(selector[, options]) 等待某个选择器的元素加载之后，这个元素可以是异步加载的，这个 API 非常有用，比如我想获取某个通过 js 异步加载的元素，那么直接获取肯定是获取不到的。这个时候就可以使用 page.waitForSelector 来解决。
+</code></pre><h3 id="5、实现代码"><a href="#5、实现代码" class="headerlink" title="5、实现代码"></a>5、实现代码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">getShopDetail</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 启动 puppeteer</span></span><br><span class="line">    <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.launch(&#123; <span class="attr">headless</span>: <span class="literal">false</span>, <span class="attr">ignoreHTTPSErrors</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">    <span class="keyword">let</span> page = <span class="keyword">await</span> browser.newPage();</span><br><span class="line">    <span class="comment">// 启用Javascript,允许执行js脚本</span></span><br><span class="line">    <span class="keyword">await</span> page.setJavaScriptEnabled(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">// 打开京东网页</span></span><br><span class="line">    <span class="keyword">await</span> page.goto(<span class="string">"https://www.jd.com/"</span>);</span><br><span class="line">    <span class="comment">// 获取搜索框元素</span></span><br><span class="line">    <span class="keyword">const</span> searchInput = <span class="keyword">await</span> page.$(<span class="string">"#key"</span>);</span><br><span class="line">    <span class="comment">// 定位到搜索框</span></span><br><span class="line">    <span class="keyword">await</span> searchInput.focus();</span><br><span class="line">    <span class="comment">// 输入搜索内容</span></span><br><span class="line">    <span class="keyword">await</span> page.keyboard.type(<span class="string">"手机"</span>);</span><br><span class="line">    <span class="comment">// 获取搜索按钮</span></span><br><span class="line">    <span class="keyword">const</span> searchBtn = <span class="keyword">await</span> page.$(<span class="string">".button"</span>);</span><br><span class="line">    <span class="comment">// 执行点击事件</span></span><br><span class="line">    <span class="keyword">await</span> searchBtn.click();</span><br><span class="line">    <span class="comment">// 等待元素加载之后，否则获取不异步加载的元素</span></span><br><span class="line">    <span class="keyword">await</span> page.waitForSelector(<span class="string">'.gl-item'</span>);</span><br><span class="line">    <span class="comment">// 获取搜索结果</span></span><br><span class="line">    <span class="keyword">const</span> links = <span class="keyword">await</span> page.$$<span class="built_in">eval</span>(<span class="string">'.gl-item &gt; .gl-i-wrap &gt; .p-img &gt; a'</span>, links =&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> links.map(<span class="function"><span class="params">a</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> &#123;</span><br><span class="line">                href: a.href.trim(),</span><br><span class="line">                title: a.title</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> content = <span class="built_in">JSON</span>.stringify(links);</span><br><span class="line">    <span class="keyword">const</span> file = path.join(__dirname, <span class="string">'resource/index.json'</span>);</span><br><span class="line">    fs.writeFile(file, content, ()=&gt; &#123;&#125;);</span><br><span class="line">    <span class="keyword">await</span> browser.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getShopDetail();</span><br></pre></td></tr></table></figure>
+<hr>
+
+<h2 id="五、定制属于自己的个人资讯网站"><a href="#五、定制属于自己的个人资讯网站" class="headerlink" title="五、定制属于自己的个人资讯网站"></a>五、定制属于自己的个人资讯网站</h2><ul>
+<li>抓取资讯 puppeteer</li>
+<li>定时任务 node-schedule</li>
+<li>部署 docker + github pages</li>
+</ul>
+<p>主要思路: puppeteer 定时抓取各个网站板块信息，每次获取内容后，保存至数据库或者简单的用Json保存，保存完成，只需要请求这个文件就可以渲染出需要的内容，定时任务可以用过 node-schedule 库来实现，部署可以采用 docker + gittpage 部署。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/webOptimize/" rel="next" title="了解输入url到页面加载，为了更好地性能优化">
+                <i class="fa fa-chevron-left"></i> 了解输入url到页面加载，为了更好地性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Ron.luo">
+            
+              <p class="site-author-name" itemprop="name">Ron.luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/luoruihuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:luoruihuan2015@gmail.com" target="_blank" title="EMail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>EMail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Puppeteer-是什么"><span class="nav-number">1.</span> <span class="nav-text">一、Puppeteer 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、运行环境"><span class="nav-number">2.</span> <span class="nav-text">二、运行环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、基本用法"><span class="nav-number">3.</span> <span class="nav-text">三、基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、入门-Demo-屏幕截图"><span class="nav-number">3.1.</span> <span class="nav-text">1、入门 Demo 屏幕截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、基础使用属性"><span class="nav-number">3.2.</span> <span class="nav-text">2、基础使用属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#①-puppeteer-launch-options-options-参数详解"><span class="nav-number">3.2.1.</span> <span class="nav-text">① puppeteer.launch(options) options 参数详解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#②-Browser-对象"><span class="nav-number">3.2.2.</span> <span class="nav-text">② Browser 对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、实战获取京东商城手机商品"><span class="nav-number">4.</span> <span class="nav-text">四、实战获取京东商城手机商品</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、获取元素"><span class="nav-number">4.1.</span> <span class="nav-text">1、获取元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、获取元素属性"><span class="nav-number">4.2.</span> <span class="nav-text">2、获取元素属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、键盘和鼠标事件"><span class="nav-number">4.3.</span> <span class="nav-text">3、键盘和鼠标事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、其他实用API"><span class="nav-number">4.4.</span> <span class="nav-text">4、其他实用API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、实现代码"><span class="nav-number">4.5.</span> <span class="nav-text">5、实现代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、定制属于自己的个人资讯网站"><span class="nav-number">5.</span> <span class="nav-text">五、定制属于自己的个人资讯网站</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ron.luo</span>
+  <span class="author"><a id="jsl_speed_stat2" href="http://www.yunaq.com/#zid=5d521c2745475e07ac6f31ed" target="_blank">知道创宇云安全</a></span>
+   <script src="//static.yunaq.com/static/js/stat/picture2_stat.js" charset="utf-8" type="text/javascript"></script>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="../../../css/gitment.css">
+        <script src="../../../js/src/gitment.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: window.location.pathname,
+            owner: 'luoruihuan',
+            repo: 'BlogsComments',
+            
+            oauth: {
+            
+            
+                client_secret: '9e8804f0ec285bac617e3c3f79e3d5a7ccf35919',
+            
+                client_id: '8ad006f46dcfbfa6cadb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

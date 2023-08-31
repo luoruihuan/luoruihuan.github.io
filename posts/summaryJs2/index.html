@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、写在前面的叨叨叨&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端知识点总结(六) JavaScript篇(二)">
+<meta property="og:url" content="http://yoursite.com/posts/summaryJs2/index.html">
+<meta property="og:site_name" content="罗瑞环的个人博客">
+<meta property="og:description" content="一、写在前面的叨叨叨&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-08-31T06:14:04.283Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端知识点总结(六) JavaScript篇(二)">
+<meta name="twitter:description" content="一、写在前面的叨叨叨&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/posts/summaryJs2/">
+
+
+
+
+
+  <title>前端知识点总结(六) JavaScript篇(二) | 罗瑞环的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46803372ba26f30b23149d9b63753426";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">罗瑞环的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/summaryJs2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ron.luo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罗瑞环的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端知识点总结(六) JavaScript篇(二)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-29T22:10:00+08:00">
+                2019-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="一、写在前面的叨叨叨"><a href="#一、写在前面的叨叨叨" class="headerlink" title="一、写在前面的叨叨叨"></a>一、写在前面的叨叨叨</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;前两周整理一些比较核心的Js的基础，这两周又收集了一些问题和知识点，拿到这篇文章来整理回顾下，大部分其实都是一些初级面试经常问的， 可以作为一个题库，等需要面试的时候刷刷也是极好的。这段时间晚上都在追庆余年，之前拿出来学习的时间也少了又少，不过剧终于追完了，也是该更新下博客拉！<a id="more"></a></p>
+<h4 id="二、Js基础梳理"><a href="#二、Js基础梳理" class="headerlink" title="二、Js基础梳理"></a>二、Js基础梳理</h4><h5 id="1、创建对象的多种方式"><a href="#1、创建对象的多种方式" class="headerlink" title="1、创建对象的多种方式"></a>1、创建对象的多种方式</h5><blockquote>
+<ul>
+<li>通过”字面量“方式创建。将成员信息写到{}中，并赋值给一个变量，此时这个变量就是一个对象。</li>
+<li>通过”构造函数“方式创建。 var obj = new 函数名();</li>
+<li>通过object方式创建。通过object构造器new一个对象，再往里丰富成员信息。</li>
+</ul>
+</blockquote>
+<h5 id="2、变量提升-hoisting"><a href="#2、变量提升-hoisting" class="headerlink" title="2、变量提升(hoisting)"></a>2、变量提升(hoisting)</h5><pre><code>JavaScript 中，函数及变量的声明都将被提升到函数的最顶部。变量可以在使用后声明，也就是变量可以先使用再声明。
+</code></pre><h5 id="3、举例说明一个匿名函数的典型用例"><a href="#3、举例说明一个匿名函数的典型用例" class="headerlink" title="3、举例说明一个匿名函数的典型用例"></a>3、举例说明一个匿名函数的典型用例</h5><pre><code>自执行函数，用闭包模拟私有变量、特权函数等。
+</code></pre><h5 id="4、DOM事件的绑定的几种方式"><a href="#4、DOM事件的绑定的几种方式" class="headerlink" title="4、DOM事件的绑定的几种方式"></a>4、DOM事件的绑定的几种方式</h5><blockquote>
+<ul>
+<li>在DOM元素中直接绑定。</li>
+<li>在JavaScript代码中绑定;</li>
+<li>绑定事件监听函数。</li>
+</ul>
+</blockquote>
+<h5 id="5、DOM事件中target和currentTarget的区别"><a href="#5、DOM事件中target和currentTarget的区别" class="headerlink" title="5、DOM事件中target和currentTarget的区别"></a>5、DOM事件中target和currentTarget的区别</h5><blockquote>
+<ul>
+<li>target:触发事件的某个具体对象，只会出现在事件流的目标阶段；</li>
+<li>currentTarget:绑定事件的对象，恒等于this，可能出现在事件流的任意一个阶段中。</li>
+</ul>
+</blockquote>
+<h5 id="6、手写Ajax，XMLHttpRequest"><a href="#6、手写Ajax，XMLHttpRequest" class="headerlink" title="6、手写Ajax，XMLHttpRequest"></a>6、手写Ajax，XMLHttpRequest</h5><p><code>XMLHttpRequest对象的本质</code>：可以发送Http请求，处理Http响应，与服务器之间进行异步交换数据的对象，其核心是Http.<br><code>具体实现步骤</code>：1、创建XMLHttpRequest对象。2、指定响应函数。3、打开连接（指定请求）4、发送请求。5、创建响应函数。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明一个变量，用来实例化XMLHttpRequest对象</span></span><br><span class="line"><span class="keyword">var</span> xmlhttp=<span class="literal">null</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest)&#123;</span><br><span class="line">    <span class="comment">// 新浏览器直接创建XMLHttpRequest对象</span></span><br><span class="line">    xmlhttp = <span class="keyword">new</span> XMLHttpRequest( );</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">window</span>.ActiveXObject)&#123;</span><br><span class="line">    <span class="comment">// IE5或IE6没有XMLHttpRequest对象，而是用的ActiveXObject对象</span></span><br><span class="line">    Xmlhttp = <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (xmlhttp !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// 指定响应函数为state_Change</span></span><br><span class="line">    xmlhttp.onreadystatechange=state_Change;</span><br><span class="line">    <span class="comment">// 指定请求，这里要访问note.xml文件，true代表的使用的是异步请求</span></span><br><span class="line">    xmlhttp.open(<span class="string">"GET"</span>,<span class="string">"note.xml"</span>,<span class="literal">true</span>);</span><br><span class="line">   	xmlhttp.send(<span class="literal">null</span>);<span class="comment">//发送请求</span></span><br><span class="line">&#125; <span class="keyword">else</span>&#123; alert(<span class="string">"你得浏览器不支持XMLHTTP."</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建具体的响应函数state_Change</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">state_Change</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (xmlhttp.readyState === <span class="number">4</span>)&#123;</span><br><span class="line">      	<span class="keyword">if</span> (xmlhttp.status === <span class="number">200</span>)&#123;</span><br><span class="line">      		<span class="comment">// 这里应该是函数具体的逻辑</span></span><br><span class="line">       	&#125;<span class="keyword">else</span>&#123; alert(<span class="string">"Problem retrieving XML data"</span>) ;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="7、JS原生对象、内置对象、宿主对象。"><a href="#7、JS原生对象、内置对象、宿主对象。" class="headerlink" title="7、JS原生对象、内置对象、宿主对象。"></a>7、JS原生对象、内置对象、宿主对象。</h5><p>&nbsp;&nbsp;&nbsp;&nbsp; <strong>原生（Naitve）对象：</strong> 独立于宿主环境的 ECMAScript实现提供的对象，包含：<code>Object</code>、<code>Function</code>、<code>Array</code>、<code>String</code>、<code>Boolean</code>、<code>Number</code>、<code>Date</code>、<code>RegExp</code>、<code>Error</code>、<code>EvalError</code>、<code>RangeError</code>、<code>ReferenceError</code>、<code>SyntaxError</code>、<code>TypeError</code>、<code>URIError</code>，简单来说，本地对象就是 ECMA-262 定义的类（引用类型）。<br>&nbsp;&nbsp;&nbsp;&nbsp; <strong>内置（Build-in）对象：</strong> 由 ECMAScript实现提供的、独立于宿主环境的所有对象，在 ECMAScript程序开始执行时出现，而ECMA-262 只定义了两个内置对象，即 Global 和 Math，内置对象是原生对象的一种。<br>&nbsp;&nbsp;&nbsp;&nbsp; <strong>宿主（host）对象：</strong> 所有非本地对象都是宿主对象，所有的BOM和DOM都是宿主对象，ECMAScript官方未定义的对象都属于宿主对象。</p>
+<h5 id="8、document-load-和-document-DOMContentLoaded-两个事件的区别"><a href="#8、document-load-和-document-DOMContentLoaded-两个事件的区别" class="headerlink" title="8、document load 和 document DOMContentLoaded 两个事件的区别"></a>8、<code>document load</code> 和 <code>document DOMContentLoaded</code> 两个事件的区别</h5><pre><code>load是页面所有资源全部加载完成后（DOM文档树，css文件，js文件，图片资源等）;
+DOMContentLoaded：当页面文档加载并解析完毕之后会马上出发 DOMContentLoaded 事件，而不会等待样式文件、图片文件和子框架页面的加载。
+</code></pre><h5 id="9、什么是“use-strict”-好处和坏处"><a href="#9、什么是“use-strict”-好处和坏处" class="headerlink" title="9、什么是“use strict”,好处和坏处"></a>9、什么是“use strict”,好处和坏处</h5><p><code>use strict:</code> 意味着代码按照严格模式解析，这种模式使得Javascript在更严格的条件下运行。<br><code>好处:</code> 消除Javascript语法的一些不合理、不严谨之处，减少一些怪异行为，消除代码运行的一些不安全之处，保证代码运行的安全；提高编译器效率，增加运行速度；<br><code>坏处:</code> 同样代码，在”严格模式”中，可能会有不一样的运行结果；一些在”正常模式”下可以运行的语句，在”严格模式”下将不能运行。</p>
+<h5 id="10、JS如何实现重载和多态"><a href="#10、JS如何实现重载和多态" class="headerlink" title="10、JS如何实现重载和多态"></a>10、JS如何实现重载和多态</h5><blockquote>
+<ul>
+<li>根据arguments个数实现重载, arguments检测传参个数，执行不同的方式。</li>
+<li>JavaScript中大多是通过子类重写父类方法的方式实现多态。</li>
+</ul>
+</blockquote>
+<h5 id="11、浅拷贝-Shallow-Copy-和深拷贝-Deep-Copy"><a href="#11、浅拷贝-Shallow-Copy-和深拷贝-Deep-Copy" class="headerlink" title="11、浅拷贝(Shallow Copy)和深拷贝(Deep Copy)"></a>11、浅拷贝(Shallow Copy)和深拷贝(Deep Copy)</h5><p><code>浅拷贝：</code> 复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享同一块内存。<br><code>浅拷贝实现方式：</code> 1、简单地复制语句。 2、Object.assign() <span style="color:#ffa500">(ES6)</span><br><code>深拷贝：</code> 创造一个一模一样的对象，新对象跟原对象不共享内存，修改新对象不会改到原对象。实现方式：</p>
+<blockquote>
+<ul>
+<li>1、用 <code>JSON.stringify</code> 把对象转成字符串，再用 <code>JSON.parse</code> 把字符串转成新的对象。</li>
+<li>2、<code>Object.create()</code>。</li>
+<li>3、递归拷贝（注意避免互相引用导致死循环）</li>
+</ul>
+</blockquote>
+<h5 id="12、CSSOM视图模式-CSSOM-View-Module"><a href="#12、CSSOM视图模式-CSSOM-View-Module" class="headerlink" title="12、CSSOM视图模式(CSSOM View Module)"></a>12、CSSOM视图模式(CSSOM View Module)</h5><blockquote>
+<ul>
+<li>Window视图属性<ul>
+<li><code>innerWidth</code> 和 <code>innerHeight</code>：window窗体的内部宽度(高度)不包括窗框。</li>
+<li><code>outerWidth</code> 和 <code>outerHeight</code>: 表示整个浏览器窗体的大小，包括任务栏。</li>
+<li><code>pageXOffset</code> 和 <code>pageYOffset</code>: 整个页面滚动的像素值(水平方向和垂直方向的)。</li>
+<li><code>screenX</code> 和 <code>screenY</code>: 浏览器窗口在显示器中的位置(screenX水平screenY垂直)。</li>
+</ul>
+</li>
+<li>Screen视图属性<ul>
+<li><code>availWidth</code> 和 <code>availHeight</code>: 显示器可用宽高，不包括任务栏等。</li>
+<li><code>colorDepth</code>: 表示显示器的颜色深度。</li>
+<li><code>width和height</code>: 表示显示器屏幕的宽高。</li>
+</ul>
+</li>
+<li>文档(DocumentView)视图属性<ul>
+<li><code>elementFromPoint:</code> 返回给定坐标处所在的元素。</li>
+<li><code>getBoundingClientRect:</code> 得到矩形元素的界线，返回的是一个对象，包含 top, left, right, 和 bottom四个属性值，大小都是相对于文档视图左上角计算而来。</li>
+<li><code>scrollIntoView:</code> 让元素滚动到可视区域。</li>
+</ul>
+</li>
+<li>元素(DocumentView)视图属性<ul>
+<li><code>clientLeft</code> 和 <code>clientTop</code>: 表示内容区域的左上角相对于整个元素左上角的位置（包括边框）。</li>
+<li><code>clientWidth</code> 和 <code>clientHeight</code>: 表示内容区域的高度和宽度，包括padding大小，但是不包括边框和滚动条。</li>
+<li><code>offsetLeft</code> 和 <code>offsetTop</code>: 表示相对于最近的祖先定位元素（CSS position 属性被设置为 relative、absolute 或 fixed 的元素）的左右偏移值。</li>
+<li><code>offsetWidth</code> 和 <code>offsetHeight</code>: 整个元素的尺寸（包括边框）。</li>
+<li><code>scrollLeft</code> 和 <code>scrollTop</code>: 表示元素滚动的像素大小。</li>
+<li><code>scrollWidth</code> 和 <code>scrollHeight</code>: 表示整个内容区域的宽高，包括隐藏的部分。如果元素没有隐藏的部分，则相关的值应该等用于clientWidth和clientHeight。当你向下滚动滚动条的时候，scrollHeight应该等用于scrollTop + clientHeight。</li>
+</ul>
+</li>
+<li>鼠标位置(Mouse position)属性<ul>
+<li><code>clientX</code> 和 <code>clientY:</code> 鼠标相对于window的偏移。</li>
+<li><code>pageX</code>, <code>pageY:</code> 鼠标相对于document的坐标。</li>
+<li><code>screenX</code>, <code>screenY:</code> 鼠标相对于显示器屏幕的偏移坐标。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="13、常用的数组api，字符串api，Math对象，Date日期对象"><a href="#13、常用的数组api，字符串api，Math对象，Date日期对象" class="headerlink" title="13、常用的数组api，字符串api，Math对象，Date日期对象"></a>13、常用的数组api，字符串api，Math对象，Date日期对象</h5><blockquote>
+<ul>
+<li>数组API<ul>
+<li><code>unshift():</code> 数组开头增加一个或多个元素，返回数组长度，原数组改变。</li>
+<li><code>shift():</code> 删除数组第一个元素，返回被删除内的容，原数组改变。</li>
+<li><code>push():</code> 数组末尾增加一个或多个元素，返回数组长度，原数组改变。</li>
+<li><code>pop():</code> 删除数组末尾一项，返回被删除的内容，原数组改变。</li>
+<li><code>concat():</code> 数组拼接，不改变原数组，返回被连接数组副本。不传参数可实现数组克隆。</li>
+<li><code>splice(index, howmany, item1, ...itemx):</code> 根据参数实现数组的删除，增加，替换。<br>例: splice（index,0，item1，item2…)从索引index开始增加，增加的内容插入到索引index前面。</li>
+<li><code>splice(index, n)</code> 从索引index开始删除n个，如果只有一个参数splice(index)，就是从索引index开始后面的内容全部删除。</li>
+<li><code>Splice(index,n，item1，item2..）</code>从索引index开始替换n个,替换的内容为item1, item2….。</li>
+<li><code>slice(n，m):</code> 从索引 n 截取到索引 m 但不包括 m ,原数组不发生改变。</li>
+<li><code>reverse():</code> 数组翻转,返回反转后新数组，原数组发生改变。</li>
+<li><code>sort():</code> 数组排序,使用方法一般sort（function（a，b）{return a-b }）从小到大排。</li>
+<li><code>toString():</code> 把数组转成以逗号分隔的字符串。</li>
+<li><code>join（拼接形式）:</code> 把数组拼接成以其他形式分割的字符串。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>字符串API<ul>
+<li><code>charAt(index):</code> 通过索引找到该索引对应字符，包含空格。</li>
+<li><code>charCodeAt(index):</code> 通过索引找到该索引字符对应的Unicode编码(0-65535的整数）。</li>
+<li><code>indexOf( ):</code> 从前往后找，找到返回内容的索引，找不到返回-1。</li>
+<li><code>lastIndexOf( ):</code> 从后往前找，找到返回内容的索引，找不到返回-1。</li>
+<li><code>slice(n，m):</code> 从索引n 查找到索引m ,但不包括m，slice可以取负值。</li>
+<li><code>substring(n，m):</code> 从索引n 查找到索引m ，但不包括m， 不可以取负值。</li>
+<li><code>substr（n，m):</code> 从索引n开始截取m 个</li>
+<li><code>split（切割形式）:</code>  把一个字符串分割成字符串数组。</li>
+<li><code>toUpperCase（）</code> :转大写字母</li>
+<li><code>toLowerCase（）</code> :转小写字母</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Math 对象API<ul>
+<li><code>Math.floor( ):</code> 向下取整</li>
+<li><code>Math.ceil( ):</code> 向上取整</li>
+<li><code>Math.round( ):</code> 四舍五入</li>
+<li><code>Math.random( ):</code> 取0-1之间的随机小数</li>
+<li><code>Math.pow(x,y):</code> x的y次幂</li>
+<li><code>Math.abs( ):</code> 取绝对值  Math.sqrt( )开平方</li>
+<li><code>Math.max/min( ):</code> 取最大/小值</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Date日期对象API<ul>
+<li><code>new Date( ):</code> 创建一个日期对象</li>
+<li><code>getFullYear()</code> 返回年份</li>
+<li><code>getMonth( ):</code> 返回月份数（0-11）, 想要得到几月，需要加一</li>
+<li><code>getDay( ):</code> 返回一周的第几天（0-6），想要得到星期几，需要加一。</li>
+<li><code>getDate( ):</code> 返回日(号)</li>
+<li><code>getMinutes():</code> 返回分</li>
+<li><code>getSeconds():</code> 返回秒</li>
+<li><code>getTime( ):</code> 返回从1970年1月1日00：00到现在的毫秒数，也就是时间戳。</li>
+<li><code>setFullYear(yearInt):</code> 设置年份4位数</li>
+<li><code>setMonth(monthInt):</code> 设置月份(0-11)</li>
+<li><code>setDate(dateInt):</code> 设置日(1-31)</li>
+<li><code>setHours(hourInt):</code> 设置小时数(0-23)</li>
+<li><code>setMinutes(minInt):</code> 设置分钟数(0-59)</li>
+<li><code>setSeconds(secInt):</code> 设置秒数(0-59)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="14、正则表达式"><a href="#14、正则表达式" class="headerlink" title="14、正则表达式"></a>14、正则表达式</h5><blockquote>
+<ul>
+<li>正则表达式的创建<ul>
+<li>调用RegExp对象的构造函数<code>var reg = new RegExp(&#39;^[a-z]+[0-9]$&#39;, &#39;gi&#39;)</code>其中第一个参数是匹配模式，第二个参数是可选参数(g, i, m),分别用于指定全局匹配、区分大小写的匹配和多行匹配。</li>
+<li>使用正则表达式字面值<code>(var reg = /^[a-z]+[0-9]$/gi)</code></li>
+</ul>
+</li>
+<li>正则表达式的组成<ul>
+<li><code>元字符:</code> .匹配除了换行符(n)以外的所有字符,w匹配字母，数字，或者汉字,W匹配除了字母，数字，汉字以外的其他字符,d匹配数字,D匹配除了数字以外的其他字符, s匹配任意的空白符(f, n, r, t, v), S匹配空白符以外的任意字符, b匹配单词的开始或者结束, B匹配单词的非开始或者结束, <code>^</code>匹配行首, <code>$</code>匹配行尾。</li>
+<li><code>转义字符(\):</code> * + ? | { [ ( ) ] }^ $ . # 和空白需要转义。</li>
+<li><code>限定符:</code> <code>*</code>匹配零次至多次，<code>+</code>匹配一次至多次，<code>？</code>匹配零次或一次{2,}至少匹配两次，{10}匹配10次，{2, 8}至少匹配两次至多匹配八次。</li>
+</ul>
+</li>
+<li>正则表达式的方法<ul>
+<li><code>test：</code> 检索字符串中的指定子串，返回布尔值。</li>
+<li><code>exec:</code> 返回一个数组，数组中的第一个条目是第一个匹配。</li>
+<li><code>search:</code> 返回子串的开始位置</li>
+<li><code>match:</code> 返回匹配到的子串</li>
+<li><code>replace:</code> 替换匹配到的子串</li>
+<li><code>split:</code> 将字符串分割成数组  <code>// &#39;a12b2334c34&#39;.split(/\d{4}/) [&quot;a12b&quot;, &quot;c34&quot;]</code></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="15、js-处理异常，调试方法"><a href="#15、js-处理异常，调试方法" class="headerlink" title="15、js 处理异常，调试方法"></a>15、js 处理异常，调试方法</h5><p><code>处理异常：</code> try catch<br><code>调试方法：</code> 1、打印到控制台。2、记录到当前页面。3、抛出错误</p>
+<h4 id="三、写在后面的叨叨叨"><a href="#三、写在后面的叨叨叨" class="headerlink" title="三、写在后面的叨叨叨"></a>三、写在后面的叨叨叨</h4><p>&nbsp;&nbsp;&nbsp;&nbsp; 不知不觉又到了深夜，渐渐的喜欢上了夜深人静的时候整理代码的感觉，这次比自己想象的整理的要多一些，除了正则花费了些功夫重新整理梳理了外，其他内容大多都是一些API文档，自己从头又过了下，虽然很多东西都过时了，例如<code>indeOf</code>早已可以用Es6的<code>includes</code> 方法去替代，语义和用法都好用很多，但是过一遍基础api也没啥坏处，明天周一，不过下周还是比较爽的元旦周三，上两天又休息了，美滋滋，加油!</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"># js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/summaryJs1/" rel="next" title="前端知识点总结(五) JavaScript篇(一)">
+                <i class="fa fa-chevron-left"></i> 前端知识点总结(五) JavaScript篇(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/waterMark/" rel="prev" title="input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能">
+                input 调用相机和HTML5 getUserMedia API 实现图片的拍照加水印功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Ron.luo">
+            
+              <p class="site-author-name" itemprop="name">Ron.luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/luoruihuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:luoruihuan2015@gmail.com" target="_blank" title="EMail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>EMail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、写在前面的叨叨叨"><span class="nav-number">1.</span> <span class="nav-text">一、写在前面的叨叨叨</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、Js基础梳理"><span class="nav-number">2.</span> <span class="nav-text">二、Js基础梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、创建对象的多种方式"><span class="nav-number">2.1.</span> <span class="nav-text">1、创建对象的多种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、变量提升-hoisting"><span class="nav-number">2.2.</span> <span class="nav-text">2、变量提升(hoisting)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、举例说明一个匿名函数的典型用例"><span class="nav-number">2.3.</span> <span class="nav-text">3、举例说明一个匿名函数的典型用例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、DOM事件的绑定的几种方式"><span class="nav-number">2.4.</span> <span class="nav-text">4、DOM事件的绑定的几种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、DOM事件中target和currentTarget的区别"><span class="nav-number">2.5.</span> <span class="nav-text">5、DOM事件中target和currentTarget的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、手写Ajax，XMLHttpRequest"><span class="nav-number">2.6.</span> <span class="nav-text">6、手写Ajax，XMLHttpRequest</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7、JS原生对象、内置对象、宿主对象。"><span class="nav-number">2.7.</span> <span class="nav-text">7、JS原生对象、内置对象、宿主对象。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、document-load-和-document-DOMContentLoaded-两个事件的区别"><span class="nav-number">2.8.</span> <span class="nav-text">8、document load 和 document DOMContentLoaded 两个事件的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9、什么是“use-strict”-好处和坏处"><span class="nav-number">2.9.</span> <span class="nav-text">9、什么是“use strict”,好处和坏处</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10、JS如何实现重载和多态"><span class="nav-number">2.10.</span> <span class="nav-text">10、JS如何实现重载和多态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11、浅拷贝-Shallow-Copy-和深拷贝-Deep-Copy"><span class="nav-number">2.11.</span> <span class="nav-text">11、浅拷贝(Shallow Copy)和深拷贝(Deep Copy)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12、CSSOM视图模式-CSSOM-View-Module"><span class="nav-number">2.12.</span> <span class="nav-text">12、CSSOM视图模式(CSSOM View Module)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13、常用的数组api，字符串api，Math对象，Date日期对象"><span class="nav-number">2.13.</span> <span class="nav-text">13、常用的数组api，字符串api，Math对象，Date日期对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14、正则表达式"><span class="nav-number">2.14.</span> <span class="nav-text">14、正则表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15、js-处理异常，调试方法"><span class="nav-number">2.15.</span> <span class="nav-text">15、js 处理异常，调试方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、写在后面的叨叨叨"><span class="nav-number">3.</span> <span class="nav-text">三、写在后面的叨叨叨</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ron.luo</span>
+  <span class="author"><a id="jsl_speed_stat2" href="http://www.yunaq.com/#zid=5d521c2745475e07ac6f31ed" target="_blank">知道创宇云安全</a></span>
+   <script src="//static.yunaq.com/static/js/stat/picture2_stat.js" charset="utf-8" type="text/javascript"></script>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="../../../css/gitment.css">
+        <script src="../../../js/src/gitment.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: window.location.pathname,
+            owner: 'luoruihuan',
+            repo: 'BlogsComments',
+            
+            oauth: {
+            
+            
+                client_secret: '9e8804f0ec285bac617e3c3f79e3d5a7ccf35919',
+            
+                client_id: '8ad006f46dcfbfa6cadb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

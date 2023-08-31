@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Css,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、简单介绍&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于Css第一章的时候总结了一些常用的基础知识，但是没有涉及到布局相关的东西，大家都知道Css布局算是一个核心功能，兼容和问题包括布局方法也都很多，这次单独拿出来一个章节对布局进行一下总结，几种常见的布局写法，双飞翼布局，圣杯布局，还有Css3的Flex布局。正好今天是周末，阳光明媚的，午后晒晒太阳写点东西还是比较惬意的。">
+<meta name="keywords" content="Css">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端知识点总结(三) Css布局篇">
+<meta property="og:url" content="http://yoursite.com/posts/summaryCss2/index.html">
+<meta property="og:site_name" content="罗瑞环的个人博客">
+<meta property="og:description" content="一、简单介绍&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于Css第一章的时候总结了一些常用的基础知识，但是没有涉及到布局相关的东西，大家都知道Css布局算是一个核心功能，兼容和问题包括布局方法也都很多，这次单独拿出来一个章节对布局进行一下总结，几种常见的布局写法，双飞翼布局，圣杯布局，还有Css3的Flex布局。正好今天是周末，阳光明媚的，午后晒晒太阳写点东西还是比较惬意的。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/uploads/justifyContent.png">
+<meta property="og:updated_time" content="2023-08-31T06:14:04.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端知识点总结(三) Css布局篇">
+<meta name="twitter:description" content="一、简单介绍&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于Css第一章的时候总结了一些常用的基础知识，但是没有涉及到布局相关的东西，大家都知道Css布局算是一个核心功能，兼容和问题包括布局方法也都很多，这次单独拿出来一个章节对布局进行一下总结，几种常见的布局写法，双飞翼布局，圣杯布局，还有Css3的Flex布局。正好今天是周末，阳光明媚的，午后晒晒太阳写点东西还是比较惬意的。">
+<meta name="twitter:image" content="http://yoursite.com/uploads/justifyContent.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/posts/summaryCss2/">
+
+
+
+
+
+  <title>前端知识点总结(三) Css布局篇 | 罗瑞环的个人博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?46803372ba26f30b23149d9b63753426";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">罗瑞环的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/posts/summaryCss2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ron.luo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="罗瑞环的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端知识点总结(三) Css布局篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-16T15:20:35+08:00">
+                2019-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、简单介绍"><a href="#一、简单介绍" class="headerlink" title="一、简单介绍"></a>一、简单介绍</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;关于<code>Css</code>第一章的时候总结了一些常用的基础知识，但是没有涉及到布局相关的东西，大家都知道<code>Css</code>布局算是一个核心功能，兼容和问题包括布局方法也都很多，这次单独拿出来一个章节对布局进行一下总结，几种常见的布局写法，双飞翼布局，圣杯布局，还有<code>Css3</code>的<code>Flex</code>布局。正好今天是周末，阳光明媚的，午后晒晒太阳写点东西还是比较惬意的。<a id="more"></a></p>
+<h3 id="二、Css布局相关"><a href="#二、Css布局相关" class="headerlink" title="二、Css布局相关"></a>二、Css布局相关</h3><h4 id="1、-grid布局-Grid-layout"><a href="#1、-grid布局-Grid-layout" class="headerlink" title="1、 grid布局(Grid layout)"></a>1、 grid布局(Grid layout)</h4><pre><code>版本支持情况：IE10+（过时语法），Edge，chrome(57)，firefox(52)，opera(44)
+</code></pre><p><strong>术语：</strong><br><code>Grid container</code> (display: gird 的元素。 这是所有grid item的直接父项)；<br><code>Grid item：</code> Grid 容器的孩子（直接子元素）。<br><code>Grid line：</code> 这个分界线组成的网格结构，即可是垂直(column),也可是水平(lines);<br><code>Grid track:</code> 两个相邻网格线之间的空间。<br><code>Grid cell：</code> 两个相邻的行和两个相邻的列网格线之间的空间。它是网格的一个“单元”。<br><code>Grid Area:</code> 四个网格线包围的总空间。 网格区域可以由任意数量的网格单元组成。<br><strong>API：</strong></p>
+<blockquote>
+<ul>
+<li>父容器(Grid Container)的属性<ul>
+<li><code>Display：</code> 元素定义为<strong>grid contaienr</strong>，并为其内容建立新的网格格式化上下文.<br>Grid：生成一个块级网格；<strong>inline-grid</strong>：生成一个行级网格；<strong>subgrid</strong>：从父节点获取行列大小。<br>注：<strong>column</strong>, <strong>float</strong>, <strong>clear</strong>, 以及 <strong>vertical-align</strong> 对一个 <strong>grid container</strong> 没有影响。</li>
+<li><code>grid-template-columns/grid-template-rows:</code>  使用以空格分隔的多个值来定义网格的列和行。值表示轨道大小(track size)，之间的空格代表表格线(grid line)。<br>例：<strong>grid-template-columns: 40px 50px auto 50px 40px;</strong>或<strong>grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px</strong> [end]；另外<strong>grid-template-columns: 1fr 1fr 1fr;</strong>“fr”单位允许您将轨道大小设置为网格容器自由空间的一部分。自由空间是在排除所有不可伸缩的item 之后计算得到的。</li>
+<li><code>grid-template-areas:</code> 通过引用 grid-area属性指定的网格区域的名称来定义网格模板.grid-area-name:使用 grid-area 属性设置的网格区域的名称。.：点号代表一个空网格单元. None:没有定义网格区域。</li>
+<li><code>grid-template：</code> 在单个声明中定义 <strong>grid-template-rows</strong>、<strong>grid-template-columns</strong>、<strong>grid-template-areas</strong> 的简写。</li>
+<li><code>grid-column-gap / grid-row-gap：</code> 指定网格线的大小，可以理解为设置列/行之间的间距的宽度。注：只能在列/行之间创建缝隙，而不是在外部边缘创建。<strong>grid-row-gap</strong> 和 <strong>grid-column-gap</strong>可以简写为<strong>grid-gap：<em>px </em>px;</strong></li>
+<li><code>justify-items:</code> 沿着Y轴对齐网格内的内容；<strong>align-items</strong>,沿着X轴对齐；<br>start: 内容与网格区域的左端对齐；end: 内容与网格区域的右端对齐； center: 内容位于网格区域的中间位置；<strong>stretch:</strong> 内容宽度占据整个网格区域空间(这是默认值)；</li>
+<li><code>justify-content/align-content：</code> 有时，网格的总大小可能小于其网格容器的大小。此时，你可以设置网格容器内的网格的对齐方式。（justify Y轴，align X轴）。<br>Start：网格与网格容器的左边对齐；End：网格与网格容器的右边对齐；Center： 网格与网格容器的中间对齐；Stretch：调整grid item 的大小，让宽度填充整个网格容器；Space-around：在 grid item 之间设置均等宽度的空白间隙，其外边缘间隙大小为中间空白间隙宽度的一半；Space-between：在grid item之间设置均等宽度空白间隙，其外边缘无间隙；Space-evenly：在每个 grid item 之间设置均等宽度的空白间隙，包括外边缘。</li>
+<li><code>grid-auto-columns/grid-auto-rows:</code>  指定自动生成的网格轨道（又名隐式网格轨道）的大小,简单理解就是当你指定的定位超过了网格范围的行或列时被创建。</li>
+</ul>
+</li>
+<li>子元素(Grid Items)的属性<ul>
+<li><code>grid-column-start/grid-column-end/grid-row-start/grid-row-end：</code>使用特定的网格线确定grid item在网格内的位置。grid-column-start/grid-row-start 属性表示grid item的网格线的起始位置，grid-column-end/grid-row-end属性表示网格项的网格线的终止位置。<br>Line: 可以是一个数字来指代相应编号的网格线，也可使用名称指代相应命名的网格线;<br>Span<number>: 网格项将跨越指定数量的网格轨道;Span<number>: 网格项将跨越一些轨道，直到碰到指定命名的网格线; auto: 自动布局， 或者自动跨越， 或者跨越一个默认的轨道。</number></number></li>
+<li><code>justify-self/align-self：</code>沿着轴grid item 里的内容。 此属性对单个网格项内的内容生效。（justify沿着Y轴，align沿着X轴）；</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="2、Flexbox-布局相关"><a href="#2、Flexbox-布局相关" class="headerlink" title="2、Flexbox 布局相关"></a>2、Flexbox 布局相关</h4><blockquote>
+<p><strong>1. 什么是Flexbox：</strong><br>CSS3 引入的新的布局模式。它决定了元素如何在页面上排列，使它们能在不同的屏幕尺寸和设备下可预测地展现出来。<br><strong>2.    兼容情况，什么情况下不建议使用：</strong><br>IE10、11部分支持，低版本不支持，现代浏览器支持。整体页面布局或者完全支持就浏览器网站不建议使用。<br><strong>3. 基本API：</strong></p>
+<ul>
+<li>容器属性<ul>
+<li><code>Flex-direction</code>：决定主轴的方向（即项目排列方向）<ul>
+<li><code>row</code>：主轴水平，起点在左；</li>
+<li><code>column</code>：主轴垂直，起点在上；</li>
+<li><code>row-reverse</code>：主轴水平，起点在右</li>
+<li><code>column-reverse</code>：主轴垂直，起点在下；</li>
+</ul>
+</li>
+<li><code>Flex-wrap</code>：默认情况下，项目排成一行，flex-wrap定义如何换行。<ul>
+<li><code>Wrap</code>：换行，第一行在上；</li>
+<li><code>wrap-reverse</code>：换行，第一行在下；</li>
+</ul>
+</li>
+<li><code>Flex-flow</code>: <code>flex-direction</code>和<code>flex-warp</code>的简写，默认row nowrap；</li>
+<li><code>justify-content</code>：定义了项目在主轴（X轴）的对齐方式<ul>
+<li><code>flex-start</code>：默认左对齐；</li>
+<li><code>flex-end</code>：右对齐；</li>
+<li><code>center</code>：居中</li>
+<li><code>space-between</code>：两端对齐，间隔相等;</li>
+<li><code>space-around</code>：每个项目两侧间隔相等。</li>
+</ul>
+</li>
+<li><code>align-items</code>：定义了项目在交叉轴（Y轴）上的对齐方式<ul>
+<li><code>Flex-start</code>：交叉轴起点对齐；</li>
+<li><code>flex-end</code>：终点对齐；</li>
+<li><code>center</code>:居中</li>
+<li><code>Baseline</code>：项目第一行文字对齐；</li>
+<li><code>stretch</code>：默认，未设置高度。占满容器高度。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p><img src="/uploads/justifyContent.png" alt="justifyContent"></p>
+<blockquote>
+<ul>
+<li>项目属性<ul>
+<li><code>order：</code> 定义项目的排列顺序，数值越小，越往前，默认0</li>
+<li><code>flex-grow：</code> 定义项目的放大比列，默认0，即如果存在剩余也不放大，如果所有项目的flex-grow属性为2，其他为1，则前者占据比其对一倍。</li>
+<li><code>flex-shrink：</code> 定义了项目的缩小比列，默认1，如果空间不足，则缩小，。如果所有项目的flex-shrink属性为1，当空间不足时，都将等比列缩放，如果一个项目的flex-shrink属性为0，其他为1，若空间不足，为0则不缩小。</li>
+<li><code>flex-basis：</code> 定义了在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性，计算主轴是否又多余空间，默认为auto，即本来大小。</li>
+<li><code>flex：</code> flex是flex-grow，flex-shrink，flex-basis的简写，默认0，1，auto；</li>
+<li><code>align-self：</code> 允许单个项目有与其他项目不一样的对齐方式，可以覆盖align-items属性，默认为auto，表示继承父元素的align-items属性。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。"><a href="#3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。" class="headerlink" title="3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。"></a>3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。</h4><p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>a、两栏布局（左侧固定，右侧自适应）</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;第一种: float + BFC方法（这个方案同样是利用了左侧浮动，但是右侧盒子通过overflow: auto;形成了BFC，因此右侧盒子不会与浮动的元素重叠。）<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.wrapper</span>&#123;</span><br><span class="line">    <span class="attribute">overflow</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">overflow</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;第二种: Flex方案<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*  flex容器的一个默认属性值:align-items: stretch;这个属性导致了列等高的效果。 */</span></span><br><span class="line"><span class="comment">/*  为了让两个盒子高度自动，需要设置: align-items: flex-start;  */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">wrapper</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">align-items</span>: flex-start;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">0</span> <span class="number">0</span> auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.wrapper</span> <span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span> <span class="number">1</span> auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>b、三列布局（左右宽度固定（要想不固定将宽度值改为百分值即可），中间自适应）</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>第一种：绝对定位法</strong>（左右两栏采用绝对定位，分别固定于页面的左右两侧，中间的主体栏用左右margin值撑开距离。于是实现了三栏自适应布局。）注：html元素高度为100%；<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>第二种：自身浮动法</strong>（左栏左浮动，右栏右浮动，主体直接放后面，就实现了自适应）;<br>&nbsp;&nbsp;&nbsp;&nbsp;<strong>第三种：圣杯布局</strong>（中间栏要在浏览器中优先展示渲染）<br>&nbsp;&nbsp;&nbsp;&nbsp;实现思路：首先设置父元素位置，padding左右空出left和right的宽度，将主体部分的三个子元素都设置左浮动，设置main宽度width：100%；让其独占一行，然后设置left和right的负的外边距（负的margin-left会让元素沿文档流向左移动，如果负的数值比较大就会一直移动到上一行，设置left部分的margin-left为-100%,就会使left向左移动一整个行的宽度，由于left左边是父元素的边框，所以left继续跳到上一行左移，一直移动到上一行的开头，并覆盖了main部分，left上移过后，right就会处于上一行的开头位置，这时再设置right部分margin-left为负的宽度，right就会左移到上一行的末尾。）接下来分别把left和right用相对定位移动到两个留白就可以。代码如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'container'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'main'</span>&gt;</span>main<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'left'</span>&gt;</span>left<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'right'</span>&gt;</span>right<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* css */</span></span><br><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">300px</span> <span class="number">0</span> <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span>,<span class="selector-class">.main</span>,<span class="selector-class">.right</span>&#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">130px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span>&#123;</span><br><span class="line">    <span class="attribute">left</span>: -<span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">background</span>: green;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span>&#123;</span><br><span class="line">    <span class="attribute">right</span>: -<span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.mian</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>第四种：双飞翼布局</strong>（与圣杯布局的不同在于解决中间栏div内容不被遮挡问题）<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--html--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'container'</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'main'</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'content'</span>&gt;</span>main<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'left'</span>&gt;</span>left<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'right'</span>&gt;</span>right<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* css 双飞翼布局比圣杯布局多创建了一个div，但不用相对布局了。*/</span></span><br><span class="line"><span class="selector-class">.left</span>,<span class="selector-class">.main</span>,<span class="selector-class">.right</span>&#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">130px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left</span>&#123;</span><br><span class="line">    <span class="attribute">background</span>: green;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.mian</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: blue;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.right</span>&#123;</span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">    <span class="attribute">margin-left</span>: -<span class="number">300px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.content</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>:<span class="number">0</span> <span class="number">300px</span> <span class="number">0</span> <span class="number">200px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Css/" rel="tag"># Css</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/summaryCss1/" rel="next" title="前端知识点总结(二) Css基础篇">
+                <i class="fa fa-chevron-left"></i> 前端知识点总结(二) Css基础篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/summaryCss3/" rel="prev" title="前端知识点总结(四) Css进阶Css3、Sass篇">
+                前端知识点总结(四) Css进阶Css3、Sass篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.png" alt="Ron.luo">
+            
+              <p class="site-author-name" itemprop="name">Ron.luo</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/luoruihuan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:luoruihuan2015@gmail.com" target="_blank" title="EMail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>EMail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、简单介绍"><span class="nav-number">1.</span> <span class="nav-text">一、简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、Css布局相关"><span class="nav-number">2.</span> <span class="nav-text">二、Css布局相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、-grid布局-Grid-layout"><span class="nav-number">2.1.</span> <span class="nav-text">1、 grid布局(Grid layout)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Flexbox-布局相关"><span class="nav-number">2.2.</span> <span class="nav-text">2、Flexbox 布局相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。"><span class="nav-number">2.3.</span> <span class="nav-text">3、实现两栏布局，三列布局中间自适应，三栏布局（圣杯布局，双飞翼布局）的方法。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ron.luo</span>
+  <span class="author"><a id="jsl_speed_stat2" href="http://www.yunaq.com/#zid=5d521c2745475e07ac6f31ed" target="_blank">知道创宇云安全</a></span>
+   <script src="//static.yunaq.com/static/js/stat/picture2_stat.js" charset="utf-8" type="text/javascript"></script>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="../../../css/gitment.css">
+        <script src="../../../js/src/gitment.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitment({
+            id: window.location.pathname,
+            owner: 'luoruihuan',
+            repo: 'BlogsComments',
+            
+            oauth: {
+            
+            
+                client_secret: '9e8804f0ec285bac617e3c3f79e3d5a7ccf35919',
+            
+                client_id: '8ad006f46dcfbfa6cadb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
